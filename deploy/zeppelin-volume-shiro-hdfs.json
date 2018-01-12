@@ -1,0 +1,78 @@
+{
+  "id": "/zeppelin",
+  "instances": 1,
+  "cpus": 4,
+  "mem": 16384,
+  "env": {
+    "SPARK_CORES_MAX": "8",
+    "SPARK_EXECUTOR_MEMORY": "8g",
+    "SPARK_MESOS_EXECUTOR_DOCKER_IMAGE": "mesosphere/spark:2.1.0-2.2.1-1-hadoop-2.6",
+    "ZEPPELIN_DATA_VOLUME": "/zeppelin-data",
+    "ZEPPELIN_NOTEBOOK_DIR": "/zeppelin-data/notebook",
+    "ZEPPELIN_SHIRO_CONF": {
+      "secret": "shiroconf"
+    }
+  },
+  "container": {
+    "docker": {
+      "image": "maibornwolff/zeppelin:0.7.3-2.1.0-2.2.1-1-hadoop-2.6-all-1",
+      "forcePullImage": false
+    },
+    "volumes": [
+      {
+        "containerPath": "/zeppelin-data",
+        "external": {
+          "name": "volume-zeppelin-data",
+          "provider": "dvdi",
+          "options": {
+            "dvdi/driver": "rexray"
+          }
+        },
+        "mode": "RW"
+      }
+    ]
+  },
+  "networks": [
+    {
+      "mode": "host"
+    }
+  ],
+  "upgradeStrategy": {
+    "maximumOverCapacity": 0,
+    "minimumHealthCapacity": 0
+  },
+  "labels": {
+    "DCOS_SERVICE_SCHEME": "http",
+    "DCOS_SERVICE_NAME": "zeppelin",
+    "DCOS_SERVICE_PORT_INDEX": "0"
+  },
+  "healthChecks": [
+    {
+      "protocol": "TCP",
+      "portIndex": 0,
+      "gracePeriodSeconds": 300,
+      "intervalSeconds": 30,
+      "timeoutSeconds": 15,
+      "maxConsecutiveFailures": 5
+    }
+  ],
+  "fetch": [
+    {
+      "uri": "http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/hdfs-site.xml",
+      "extract": false,
+      "executable": false,
+      "cache": false
+    },
+    {
+      "uri": "http://api.hdfs.marathon.l4lb.thisdcos.directory/v1/endpoints/core-site.xml",
+      "extract": false,
+      "executable": false,
+      "cache": false
+    }
+  ],
+  "secrets": {
+    "shiroconf": {
+      "source": "zeppelin/shiro-conf"
+    }
+  }
+}
