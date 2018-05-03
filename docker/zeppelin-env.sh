@@ -21,5 +21,10 @@ if [ -n "${SPARK_EXECUTOR_CORES}" ]; then
   export ZEPPELIN_INTP_JAVA_OPTS="${ZEPPELIN_INTP_JAVA_OPTS} -Dspark.executor.cores=${SPARK_EXECUTOR_CORES}"
 fi
 
+if [ -n "${SPARK_MESOS_EXECUTOR_DOCKER_VOLUMES}" ]; then
+  export ZEPPELIN_JAVA_OPTS="${ZEPPELIN_JAVA_OPTS} -Dspark.mesos.executor.docker.volumes=${SPARK_MESOS_EXECUTOR_DOCKER_VOLUMES}"
+  export ZEPPELIN_INTP_JAVA_OPTS="${ZEPPELIN_INTP_JAVA_OPTS} -Dspark.mesos.executor.docker.volumes=${SPARK_MESOS_EXECUTOR_DOCKER_VOLUMES}"
+fi
+
 export MASTER=mesos://zk://master.mesos:2181/mesos
 export MESOS_NATIVE_LIBRARY=/usr/lib/libmesos.so

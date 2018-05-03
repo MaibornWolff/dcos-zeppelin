@@ -112,6 +112,19 @@ To access HDFS from zeppelin you need to provide the files `hdfs-site.xml` and `
 }
 ```
 
+### External executor volume
+
+Set the list of volumes which will be mounted into the Docker image, which was set using spark.mesos.executor.docker.image. The format of this property is a comma-separated list of mappings following the form passed to docker run -v. Define an `ENV` variable
+
+```
+SPARK_MESOS_EXECUTOR_DOCKER_VOLUMES="[host_path:]container_path[:ro|:rw]"
+```
+e.g.:
+```
+SPARK_MESOS_EXECUTOR_DOCKER_VOLUMES="/mnt/share/data:/data:rw"
+```
+
+
 ### Extra configuration
 You can provide your own custom zeppelin-site.xml:
 1. Create your custom zeppelin-site.xml
