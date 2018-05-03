@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-declare -A spark_versions=( ["2.2.1-1-hadoop-2.6"]="2.1.0-2.2.1-1-hadoop-2.6" ["2.2.1-1-hadoop-2.7"]="2.1.0-2.2.1-1-hadoop-2.7" )
+declare -A spark_versions=( ["2.2.1-2-hadoop-2.6"]="2.3.1-2.2.1-2-hadoop-2.6" ["2.2.1-2-hadoop-2.7"]="2.3.1-2.2.1-2-hadoop-2.7" )
 ZEPPELIN_VERSION=0.7.3
 RELEASE=${RELEASE:-2}
 DOCKER_REPO=${DOCKER_REPO:-maibornwolff}
