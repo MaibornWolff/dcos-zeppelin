@@ -29,4 +29,20 @@ elif [ "$ZEPPELIN_SHIRO_CONF" != "" ]; then
   echo "$ZEPPELIN_SHIRO_CONF" > $CONF_DIR/shiro.ini
 fi
 
+# Install extra python packages
+if [ -n "$PYTHON_PACKAGES" ]; then
+  if [ -n "$PIP_PATH" ]; then
+    $PIP_PATH install $PYTHON_PACKAGES
+  elif [[ $PYSPARK_PYTHON == python3* ]]; then
+    pip3 install $PYTHON_PACKAGES
+  else
+    pip2 install $PYTHON_PACKAGES
+  fi
+fi
+
+# Install extra r packages
+if [ -n "$R_PACKAGES" ]; then
+  R -e "install.packages($R_PACKAGES, repos = 'http://cran.us.r-project.org')"
+fi
+
 SPARK_HOME=/opt/spark/dist bin/zeppelin.sh $ZEPPELIN_CONFIG_OPTION start

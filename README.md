@@ -139,6 +139,14 @@ You can provide your own custom zeppelin-site.xml:
 }
 ```
 
+### Python support
+The docker image contains python2.7 and python3.4. You can use the python and pyspark interpreters without further configuration.
+By default python2.7 is used, if you want to use python3.4 set the environment variable `PYSPARK_PYTHON` to `python3`.
+You can also install additional python packages at startup. To do that set the environment variable `PYTHON_PACKAGES` to a space-separated list of packages (for example `PYTHON_PACKAGES="requests tensorflow"`). This list will be given to pip at startup. Be aware that installing packages increases the startup time of zeppelin.
+
+
+### R support
+The docker image contains R version 3.4 and already has the recommended packages from the [Zeppelin documentation](https://zeppelin.apache.org/docs/0.7.3/interpreter/r.html) installed, specifically `devtools`, `knitr`, `ggplot2`, `mplot` and `googleVis`. You can install additional R packages at startup by setting the environment variable `R_PACKAGES`. The content of this variable will be fed directly to `install.packages()`, so be sure to use the correct syntax (e.g. `R_PACKAGES="c('glmnet', 'caret')"`). Be aware that installing packages can drastically increase the startup time of zeppelin.
 
 
 ### External access

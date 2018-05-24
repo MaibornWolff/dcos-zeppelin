@@ -1,4 +1,4 @@
-ARG SPARK_VERSION=2.1.0-2.2.1-1-hadoop-2.6
+ARG SPARK_VERSION=2.3.1-2.2.1-2-hadoop-2.6
 FROM mesosphere/spark:$SPARK_VERSION
 
 ARG SPARK_VERSION
@@ -6,7 +6,18 @@ ARG ZEPPELIN_VERSION
 ARG PACKAGE_TYPE=all
 
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update && apt-get install --yes software-properties-common wget tar
+RUN echo "deb http://ftp.gwdg.de/pub/misc/cran/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list
+RUN apt-get update && apt-get install --yes --force-yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" software-properties-common wget tar r-base libssl-dev libcurl4-openssl-dev
+
+# Prepare python
+RUN wget https://bootstrap.pypa.io/get-pip.py && python2 get-pip.py && python3 get-pip.py && rm get-pip.py
+
+# Prepare R
+RUN R -e "install.packages('devtools', repos = 'http://cran.us.r-project.org')" && \
+R -e "install.packages('knitr', repos = 'http://cran.us.r-project.org')" && \
+R -e "install.packages('ggplot2', repos = 'http://cran.us.r-project.org')" && \
+R -e "install.packages(c('mplot', 'googleVis'), repos = 'http://cran.us.r-project.org'); require(devtools); install_github('ramnathv/rCharts')"
+
 
 # hadoop config
 ENV HADOOP_CONF_DIR /etc/hadoop/conf/
