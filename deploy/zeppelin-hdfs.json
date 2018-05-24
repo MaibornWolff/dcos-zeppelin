@@ -10,7 +10,7 @@
   },
   "container": {
     "docker": {
-      "image": "maibornwolff/zeppelin:0.7.3-2.1.0-2.2.1-1-hadoop-2.6-all-1",
+      "image": "maibornwolff/zeppelin:0.7.3-3-all-2.2.1-2-hadoop-2.6",
       "forcePullImage": false
     }
   },

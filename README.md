@@ -4,7 +4,7 @@ This project provides docker images and marathon app definitions to run [Apache 
 
 This is a custom-built image based on the mesosphere spark docker image because the official Zeppelin docker image does not contain the neccessary libraries for mesos and can not be configured for the extra features that are possible with DC/OS (see below).
 
-At the moment this project can not be installed via the DC/OS Universe.
+This project is also available as a DC/OS [universe package](https://universe.dcos.io/#/package/zeppelin/version/latest). Install it using `dcos package install zeppelin`.
 
 **The Spark interpreter in Zeppelin can currently not be used on a DC/OS EE cluster with strict security mode enabled.**
 Please use a cluster configured with disabled or permissive security mode.
@@ -27,7 +27,7 @@ Please use a cluster configured with disabled or permissive security mode.
 
 
 ### Requirements
-* DC/OS 1.10 (OpenSource or Enterprise)
+* DC/OS 1.10 or 1.11 (OpenSource or Enterprise)
 * Optional: HDFS
 * Optional: Marathon-LB
 * Optional: HTTP Fileserver
