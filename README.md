@@ -174,7 +174,7 @@ By default the app definitions use the all variant. If you want the netinst vari
 ./build.sh
 ```
 
-The build script will build docker images for different spark versions and with zeppelin with all interpreters (all) or just the spark interpreter (netinst). The dockerfile uses ARG before FROM, therefore you need at least docker 17.05 to build.
+The build script will build docker images with zeppelin with all interpreters (all) or just the spark interpreter (netinst).
 
 
 ## Acknowledgments
