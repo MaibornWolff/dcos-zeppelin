@@ -1,8 +1,7 @@
 FROM mesosphere/spark:2.3.1-2.2.1-2-hadoop-2.6
 
 ARG SPARK_VERSION=2.3.1-2.2.1-2-hadoop-2.6
-ARG ZEPPELIN_VERSION=0.8.0
-ARG PACKAGE_TYPE=all
+ARG ZEPPELIN_VERSION=0.8.1-SNAPSHOT
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN echo "deb http://ftp.gwdg.de/pub/misc/cran/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list
@@ -25,8 +24,8 @@ RUN mkdir -p $HADOOP_CONF_DIR
 # zeppelin
 ENV SPARK_MESOS_EXECUTOR_DOCKER_IMAGE mesosphere/spark:$SPARK_VERSION
 WORKDIR /
-RUN wget -q -O zeppelin.tgz "http://www.apache.org/dyn/closer.cgi?action=download&filename=/zeppelin/zeppelin-$ZEPPELIN_VERSION/zeppelin-$ZEPPELIN_VERSION-bin-$PACKAGE_TYPE.tgz"
-RUN tar xzvf zeppelin.tgz && rm zeppelin.tgz && mv zeppelin-$ZEPPELIN_VERSION-bin-$PACKAGE_TYPE zeppelin
+COPY zeppelin.tgz /
+RUN tar xzvf zeppelin.tgz && rm zeppelin.tgz && mv zeppelin-$ZEPPELIN_VERSION zeppelin
 WORKDIR /zeppelin
 ADD zeppelin-env.sh conf/zeppelin-env.sh
 ADD startup.sh bin/

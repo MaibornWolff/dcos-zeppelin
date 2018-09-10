@@ -10,6 +10,14 @@ This project is also available as a DC/OS [universe package](https://universe.dc
 Please use a cluster configured with disabled or permissive security mode.
 
 
+## Build image with custom-built zeppelin
+1. Fork apache/zeppelin project, make your changes and build project using maven.
+2. Copy the resulting dist tar into the docker directory as `zeppelin.tgz`
+3. Run `./build.sh` to build docker image
+4. Push to your private registry
+5. Use one of the marathon app definitions and change the docker image name to your custom image
+
+
 ## Quickstart
 1. `dcos marathon app add deploy/zeppelin-minimal.json`
 2. Open the DC/OS UI
