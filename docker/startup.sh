@@ -45,4 +45,15 @@ if [ -n "$R_PACKAGES" ]; then
   R -e "install.packages($R_PACKAGES, repos = 'http://cran.us.r-project.org')"
 fi
 
+# Install custom cacerts
+if [ -e /mnt/mesos/sandbox/cacerts ]; then
+	find /usr/lib/jvm -name cacerts -exec cp /mnt/mesos/sandbox/cacerts '{}' \; 
+fi
+
+# Add custom jars 
+if [ -e /mnt/mesos/sandbox/jars ]; then
+    cp /mnt/mesos/sandbox/*jar /opt/spark/dist/jars/
+    cp /mnt/mesos/sandbox/*jar /zeppelin/lib/
+fi
+
 SPARK_HOME=/opt/spark/dist bin/zeppelin.sh $ZEPPELIN_CONFIG_OPTION start
