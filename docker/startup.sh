@@ -56,4 +56,12 @@ if [ -e /mnt/mesos/sandbox/jars ]; then
     cp /mnt/mesos/sandbox/*jar /zeppelin/lib/
 fi
 
+# Add TZ
+if [ "${TZ:+x}" == "x" ]; then
+  if [ -e /usr/share/zoneinfo/$TZ ]; then
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
+    echo $TZ > /etc/timezone
+  fi
+fi
+
 SPARK_HOME=/opt/spark/dist bin/zeppelin.sh $ZEPPELIN_CONFIG_OPTION start
