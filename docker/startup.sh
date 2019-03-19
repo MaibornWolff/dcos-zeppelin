@@ -46,15 +46,12 @@ if [ -n "$R_PACKAGES" ]; then
 fi
 
 # Install custom cacerts
-if [ -e /mnt/mesos/sandbox/cacerts ]; then
-	find /usr/lib/jvm -name cacerts -exec cp /mnt/mesos/sandbox/cacerts '{}' \; 
+if [ -e ${MESOS_SANDBOX}/cacerts ]; then
+	find /usr/lib/jvm -name cacerts -exec cp ${MESOS_SANDBOX}/cacerts '{}' \; 
 fi
 
 # Add custom jars 
-if [ -e /mnt/mesos/sandbox/jars ]; then
-    cp /mnt/mesos/sandbox/*jar /opt/spark/dist/jars/
-    cp /mnt/mesos/sandbox/*jar /zeppelin/lib/
-fi
+find $MESOS_SANDBOX -iname "*.jar" \( -exec cp {} /opt/spark/jars/ \; -exec cp {} /zeppelin/lib/ \; \)
 
 # Add TZ
 if [ "${TZ:+x}" == "x" ]; then
