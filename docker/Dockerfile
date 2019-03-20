@@ -1,12 +1,18 @@
-FROM mesosphere/spark:2.3.1-2.2.1-2-hadoop-2.6
+FROM mesosphere/spark:2.7.0-2.4.0-hadoop-2.7
 
-ARG SPARK_VERSION=2.3.1-2.2.1-2-hadoop-2.6
-ARG ZEPPELIN_VERSION=0.8.0
+ARG SPARK_VERSION=2.7.0-2.4.0-hadoop-2.7
+ARG ZEPPELIN_VERSION=0.8.1
 ARG PACKAGE_TYPE=all
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN echo "deb http://ftp.gwdg.de/pub/misc/cran/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list
-RUN apt-get update && apt-get install --yes --force-yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" software-properties-common wget tar r-base libssl-dev libcurl4-openssl-dev
+
+# Cause above repo is not signed
+RUN apt -o Acquire::AllowInsecureRepositories=true \
+	-o Acquire::AllowDowngradeToInsecureRepositories=true \
+	update
+
+RUN  apt-get install --yes --force-yes -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" software-properties-common wget tar r-base libssl-dev libcurl4-openssl-dev libsasl2-dev python3-dev python-dev
 
 # Prepare python
 RUN wget https://bootstrap.pypa.io/get-pip.py && python2 get-pip.py && python3 get-pip.py && rm get-pip.py

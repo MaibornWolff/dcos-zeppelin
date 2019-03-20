@@ -45,4 +45,20 @@ if [ -n "$R_PACKAGES" ]; then
   R -e "install.packages($R_PACKAGES, repos = 'http://cran.us.r-project.org')"
 fi
 
+# Install custom cacerts
+if [ -e ${MESOS_SANDBOX}/cacerts ]; then
+	find /usr/lib/jvm -name cacerts -exec cp ${MESOS_SANDBOX}/cacerts '{}' \; 
+fi
+
+# Add custom jars 
+find $MESOS_SANDBOX -iname "*.jar" \( -exec cp {} /opt/spark/jars/ \; -exec cp {} /zeppelin/lib/ \; \)
+
+# Add TZ
+if [ "${TZ:+x}" == "x" ]; then
+  if [ -e /usr/share/zoneinfo/$TZ ]; then
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
+    echo $TZ > /etc/timezone
+  fi
+fi
+
 SPARK_HOME=/opt/spark/dist bin/zeppelin.sh $ZEPPELIN_CONFIG_OPTION start
