@@ -9,8 +9,9 @@
     "SPARK_EXECUTOR_CORES": "1"
   },
   "container": {
+    "type": "MESOS",
     "docker": {
-      "image": "maibornwolff/zeppelin:0.7.3-3-all-2.2.1-2-hadoop-2.6",
+      "image": "maibornwolff/zeppelin:1.1-0.8.1-all-2.4.0",
       "forcePullImage": false
     }
   },

@@ -10,14 +10,23 @@ This project is also available as a DC/OS [universe package](https://universe.dc
 Please use a cluster configured with disabled or permissive security mode.
 
 
+
 ## Quickstart
-1. `dcos marathon app add deploy/zeppelin-minimal.json`
-2. Open the DC/OS UI
-3. Wait till the zeppelin service is green / healthy
-4. use the "Open Service" link to open zeppelin in a new tab
+```bash
+$ dcos package install zeppelin
+This DC/OS Service is currently in preview.
+Continue installing? [yes/no] yes
+Installing Marathon app for package [zeppelin] version [1.1-0.8.1-2.4.0]
+DC/OS Zeppelin is being installed!
 
+	Documentation:  https://github.com/dcos/examples/tree/master/zeppelin/1.11
+	Issues: https://dcos.io/community or
+		 	https://github.com/MaibornWolff/dcos-zeppelin
+```
 
-## How to install
+For detailed instructions on using the universe package see the [DC/OS Examples repo](https://github.com/dcos/examples/tree/master/zeppelin/1.11).
+
+## How to install using the marathon app
 1. Use the marathon app definition in deploy/zeppelin-minimal.json as a basis
 2. Choose the extra features you want from the list below and modify the json accordingly or use extended zeppelin-volume-shiro-hdfs.json file
 3. Choose a image variant based on spark version
@@ -27,13 +36,15 @@ Please use a cluster configured with disabled or permissive security mode.
 
 
 ### Requirements
-* DC/OS 1.10 or 1.11 (OpenSource or Enterprise)
+* DC/OS 1.10, 1.11 or 1.12 (OpenSource or Enterprise)
 * Optional: HDFS
 * Optional: Marathon-LB
 * Optional: HTTP Fileserver
 
 
 ## Features
+
+All features are also available in the Universe package. Use `dcos package describe zeppelin --config` to get a complete list of possible configuration options.
 
 ### Persistent Notebooks
 The docker image is built to store notebook data on a persistent volume. To use it add a volume definition to the app

@@ -61,4 +61,4 @@ if [ "${TZ:+x}" == "x" ]; then
   fi
 fi
 
-SPARK_HOME=/opt/spark/dist bin/zeppelin.sh $ZEPPELIN_CONFIG_OPTION start
+SPARK_HOME=/opt/spark bin/zeppelin.sh $ZEPPELIN_CONFIG_OPTION start

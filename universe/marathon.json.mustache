@@ -32,14 +32,27 @@
     {{#spark.executor_cores}}
     "SPARK_EXECUTOR_CORES": "{{spark.executor_cores}}",
     {{/spark.executor_cores}}
+    {{#zeppelin.timezone}}
+    "TZ": "{{zeppelin.timezone}}",
+    {{/zeppelin.timezone}}
     "ZEPPELIN_JAVA_OPTS": "{{spark.java_opts}}",
     "ZEPPELIN_INTP_JAVA_OPTS": "{{spark.java_opts}}"
   },
   "container": {
+    "type": "MESOS",
     "docker": {
       "image": "{{resource.assets.container.docker.zeppelin}}",
       "forcePullImage": false
     },
+    {{#service.virtual_network_enabled}}
+    "portMappings": [
+      {
+        "containerPort": 8080,
+        "name": "web",
+        "protocol": "tcp"
+      }
+    ],
+    {{/service.virtual_network_enabled}}
     "volumes": [
       {{#service.external_persistent_volume}}
       {
@@ -73,9 +86,17 @@
     ]
   },
   "networks": [
+    {{#service.virtual_network_enabled}}
+    {
+      "name": "{{service.virtual_network_name}}",
+      "mode": "container"
+    }
+    {{/service.virtual_network_enabled}}
+    {{^service.virtual_network_enabled}}
     {
       "mode": "host"
     }
+    {{/service.virtual_network_enabled}}
   ],
   "upgradeStrategy": {
     "maximumOverCapacity": 0,
@@ -101,16 +122,19 @@
     }
   ],
   "fetch": [
+    {{#zeppelin.cacerts_url}}
+    { "uri": "{{zeppelin.cacerts_url}}", "extract": false, "executable": false, "cache": false }
+    {{/zeppelin.cacerts_url}}
     {{#spark.use_hdfs}}
+    {{#zeppelin.cacerts_url}},{{/zeppelin.cacerts_url}}
     { "uri": "{{spark.hdfs_config_url}}/hdfs-site.xml", "extract": false, "executable": false, "cache": false },
     { "uri": "{{spark.hdfs_config_url}}/core-site.xml", "extract": false, "executable": false, "cache": false }
     {{/spark.use_hdfs}}
     {{#zeppelin.shiro_conf_url}}
-    {{#spark.use_hdfs}},{{/spark.use_hdfs}}
+    {{#spark.use_hdfs}},{{/spark.use_hdfs}}{{^spark.use_hdfs}}{{#zeppelin.cacerts_url}},{{/zeppelin.cacerts_url}}{{/spark.use_hdfs}}
     { "uri": "{{zeppelin.shiro_conf_url}}", "extract": false, "executable": false, "cache": false }
     {{/zeppelin.shiro_conf_url}}
   ],
-
   "secrets": {
     {{#zeppelin.shiro_conf_secret}}
     "shiroconf": {

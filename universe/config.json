@@ -41,6 +41,16 @@
                   "type": "string",
                   "description": "The domain name to use for marathon-lb, used for HAPROXY_0_VHOST",
                   "default": ""
+                },
+                "virtual_network_enabled": {
+                  "description": "Enable virtual networking. Otherwise host networking will be used. With virtual network enabled you need marathon-lb to access your instance as the dcos-adminrouter does not work with cni.",
+                  "type": "boolean",
+                  "default": false
+                },
+                "virtual_network_name": {
+                  "description": "The name of the virtual network to join",
+                  "type": "string",
+                  "default": "dcos"
                 }
             }
         },
@@ -99,6 +109,16 @@
                 "type": "string",
                 "description": "List of r packages to install on startup, will be passed to the R command install.packages(). Needs internet connection. Example: \"c('glmnet', 'caret')\"",
                 "default": ""
+            },
+            "timezone": {
+              "type": "string",
+              "description": "Timezone to set in the container. Needed if you want to run the cron scheduler for notebooks. Example: \"Europe/Berlin\"",
+              "default": ""
+            },
+            "cacerts_url": {
+              "type": "string",
+              "description": "URL for a custom cacerts file that should be used for the zeppelin jvm. Must be fetchable by the mesos agents.",
+              "default": ""
             }
           }
         }
