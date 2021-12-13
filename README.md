@@ -1,3 +1,6 @@
+# END OF LIFE
+This project is not being maintened anymore.
+
 # Zeppelin on DC/OS
 
 This project provides docker images and marathon app definitions to run [Apache Zeppelin](https://zeppelin.apache.org/) on [DC/OS](https://dcos.io). Images are published to [Docker Hub](https://hub.docker.com/r/maibornwolff/zeppelin/).
