@@ -1,5 +1,5 @@
 # END OF LIFE
-This project is not being maintened anymore.
+This project is not being maintained anymore.
 
 # Zeppelin on DC/OS
 
